@@ -1,0 +1,95 @@
+Commit 1: Gradient Descent - The Foundation of ML Optimization
+
+WHAT IS GRADIENT DESCENT?
+==========================
+
+Gradient descent is an iterative optimization algorithm that finds the
+minimum of a function by following the direction of steepest descent.
+
+Think of it like walking down a mountain in fog:
+- You can't see the valley (global minimum)
+- But you can feel which direction slopes downward (gradient)
+- You take small steps in that direction (learning rate)
+- Eventually you reach the bottom (convergence)
+
+
+THE MATHEMATICS
+===============
+
+Update Rule:
+  θ_new = θ_old - α * ∇f(θ_old)
+
+Where:
+  θ (theta)  = parameters we're optimizing
+  α (alpha)  = learning rate (step size)
+  ∇f (nabla) = gradient (direction of steepest ascent)
+
+We subtract the gradient because we want to go DOWN (minimize), not up.
+
+
+KEY CONCEPTS TAUGHT
+===================
+
+1. LEARNING RATE (α)
+   - Too small: slow convergence, many iterations
+   - Too large: overshooting, divergence
+   - Just right: efficient optimization
+
+2. CONVERGENCE
+   - Stop when gradient ≈ 0 (at a minimum)
+   - Or when max iterations reached
+   - Balance accuracy vs computational cost
+
+3. GRADIENT NORM
+   - Measures steepness at current point
+   - ||∇f|| ≈ 0 → near a critical point
+   - Large norm → far from minimum
+
+
+FILES ADDED
+===========
+
+1. lib/ml_nx/gradient_descent.ex
+   - Core GD implementation with step-by-step math
+   - Heavily documented with inline explanations
+   - Functions: optimize/3, step/3, minimize_quadratic/3
+
+2. test/gradient_descent_test.exs
+   - 12 comprehensive tests (all passing ✓)
+   - Tests convergence, learning rates, multi-dimensional
+   - Educational comments explaining what each test validates
+
+3. examples/gradient_descent_demo.exs
+   - 4 interactive examples showing GD in action
+   - Visualizes convergence journey
+   - Compares different learning rates
+   - Shows 2D optimization
+
+
+WHAT YOU LEARNED
+================
+
+✓ How gradient descent finds optimal parameters
+✓ Why we move opposite to the gradient
+✓ Impact of learning rate on convergence
+✓ When to stop (convergence criteria)
+✓ How to optimize multi-dimensional functions
+
+This is the foundation for ALL machine learning optimization!
+
+
+RUN THE CODE
+============
+
+# Run tests
+mix test test/gradient_descent_test.exs
+
+# Run interactive demo
+mix run examples/gradient_descent_demo.exs
+
+
+NEXT LESSON
+===========
+
+Commit 2 will cover Loss Functions - different ways to measure
+prediction error (MSE, MAE, Huber, Cross-Entropy).

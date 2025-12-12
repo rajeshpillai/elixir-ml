@@ -1,0 +1,150 @@
+Commit 2: Loss Functions - Measuring Prediction Error
+
+WHAT ARE LOSS FUNCTIONS?
+=========================
+
+A loss function measures how wrong our model's predictions are. It takes
+predicted values and true values, and returns a single number representing
+the error.
+
+The goal of machine learning is to MINIMIZE the loss function!
+
+
+WHY DIFFERENT LOSS FUNCTIONS?
+==============================
+
+Different problems need different loss functions:
+
+REGRESSION (continuous values):
+  - MSE: Penalizes large errors heavily
+  - MAE: Robust to outliers
+  - Huber: Best of both worlds
+
+CLASSIFICATION (categories):
+  - Binary Cross-Entropy: For 2 classes
+  - Categorical Cross-Entropy: For 3+ classes
+
+
+THE MATHEMATICS
+===============
+
+1. MEAN SQUARED ERROR (MSE) - L2 Loss
+   Formula: MSE = (1/n) Σ(ŷ - y)²
+   
+   Properties:
+   - Squares errors → large errors penalized heavily
+   - Sensitive to outliers
+   - Most common for regression
+   
+   Example: error=2 contributes 4, error=10 contributes 100!
+
+2. MEAN ABSOLUTE ERROR (MAE) - L1 Loss
+   Formula: MAE = (1/n) Σ|ŷ - y|
+   
+   Properties:
+   - Linear penalty → all errors weighted equally
+   - Robust to outliers
+   - Interpretable (average error in original units)
+   
+   Example: error=2 contributes 2, error=10 contributes 10
+
+3. HUBER LOSS - Robust Loss
+   Formula: Huber(e) = { 0.5*e²        if |e| ≤ δ
+                       { δ(|e| - δ/2)  if |e| > δ
+   
+   Properties:
+   - Quadratic for small errors (smooth gradients)
+   - Linear for large errors (robust to outliers)
+   - Combines best of MSE and MAE!
+   
+   Delta (δ) controls the threshold
+
+4. BINARY CROSS-ENTROPY - Classification Loss
+   Formula: BCE = -[y*log(ŷ) + (1-y)*log(1-ŷ)]
+   
+   Properties:
+   - For binary classification (0 or 1)
+   - Heavily penalizes confident wrong predictions
+   - Use after sigmoid activation
+   
+   Example: Predicting 0.1 when truth is 1 → loss ≈ 2.3 (huge!)
+
+5. CATEGORICAL CROSS-ENTROPY - Multi-class Loss
+   Formula: CCE = -Σ(y * log(ŷ))
+   
+   Properties:
+   - For multi-class classification (3+ classes)
+   - Use after softmax activation
+   - Measures KL divergence between distributions
+
+
+KEY CONCEPTS TAUGHT
+===================
+
+1. MSE VS MAE WITH OUTLIERS
+   - MSE: Outlier error 9.5 → contributes 90.25 (squared!)
+   - MAE: Outlier error 9.5 → contributes 9.5 (linear)
+   - Result: MSE increases 91x, MAE only 11x
+
+2. HUBER LOSS BALANCES BOTH
+   - Small errors: Uses MSE (smooth optimization)
+   - Large errors: Uses MAE (robust to outliers)
+   - Tunable with delta parameter
+
+3. CROSS-ENTROPY FOR CLASSIFICATION
+   - Measures how wrong probability predictions are
+   - Confident correct: low loss
+   - Confident wrong: very high loss
+   - Forces model to be calibrated
+
+
+FILES ADDED
+===========
+
+1. lib/ml_nx/loss_functions.ex
+   - 5 loss functions with extensive math documentation
+   - MSE, RMSE, MAE, Huber, Binary/Categorical Cross-Entropy
+   - Helper function: regression_metrics/3
+
+2. test/loss_functions_test.exs
+   - 27 comprehensive tests (all passing ✓)
+   - Tests each loss function's properties
+   - Compares behavior with outliers
+   - Educational comments
+
+3. examples/loss_functions_demo.exs
+   - 6 interactive examples
+   - MSE vs MAE comparison
+   - Huber loss demonstration
+   - Binary and categorical cross-entropy
+   - Decision guide for choosing loss functions
+
+
+WHAT YOU LEARNED
+================
+
+✓ What loss functions are and why we need them
+✓ MSE penalizes large errors (quadratic)
+✓ MAE is robust to outliers (linear)
+✓ Huber combines smooth gradients + robustness
+✓ Cross-entropy for classification problems
+✓ How to choose the right loss function
+
+This connects to Commit 1: We use gradient descent to MINIMIZE these loss functions!
+
+
+RUN THE CODE
+============
+
+# Run tests
+mix test test/loss_functions_test.exs
+
+# Run interactive demo
+mix run examples/loss_functions_demo.exs
+
+
+NEXT LESSON
+===========
+
+Commit 3 will cover Regularization - preventing overfitting by
+penalizing large weights (L1, L2, Elastic Net).

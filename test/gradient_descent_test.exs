@@ -85,7 +85,7 @@ defmodule MLNx.GradientDescentTest do
       initial_x = Nx.tensor(5.0)
       target = Nx.tensor(0.0)
 
-      {final_x, history} = MLNx.GradientDescent.minimize_quadratic(
+      {_final_x, history} = MLNx.GradientDescent.minimize_quadratic(
         initial_x,
         target,
         learning_rate: 0.1,
@@ -98,7 +98,7 @@ defmodule MLNx.GradientDescentTest do
       assert length(history) > 0
 
       # First entry should be initial state
-      {first_params, first_grad_norm} = hd(history)
+      {first_params, _first_grad_norm} = hd(history)
       assert_in_delta(Nx.to_number(first_params), 5.0, 0.01)
 
       # Gradient norm should decrease over time (approaching minimum)
@@ -150,7 +150,7 @@ defmodule MLNx.GradientDescentTest do
       initial_x = Nx.tensor(100.0)
       gradient_fn = fn x -> Nx.multiply(2.0, x) end
 
-      {result, history} = MLNx.GradientDescent.optimize(
+      {_result, history} = MLNx.GradientDescent.optimize(
         initial_x,
         gradient_fn,
         learning_rate: 0.001,

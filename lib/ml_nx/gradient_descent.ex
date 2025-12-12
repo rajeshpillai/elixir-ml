@@ -106,7 +106,7 @@ defmodule MLNx.GradientDescent do
 
   # Simple optimization without tracking history
   defp optimize_simple(params, gradient_fn, lr, max_iters, tolerance) do
-    Enum.reduce_while(1..max_iters, params, fn iter, current_params ->
+    Enum.reduce_while(1..max_iters, params, fn _iter, current_params ->
       # Compute gradient at current position
       # The gradient tells us which direction increases the function
       grad = gradient_fn.(current_params)
@@ -133,7 +133,7 @@ defmodule MLNx.GradientDescent do
     initial_state = {params, []}
 
     {final_params, history} =
-      Enum.reduce_while(1..max_iters, initial_state, fn iter, {current_params, history} ->
+      Enum.reduce_while(1..max_iters, initial_state, fn _iter, {current_params, history} ->
         grad = gradient_fn.(current_params)
         grad_norm = grad |> Nx.abs() |> Nx.sum() |> Nx.to_number()
 

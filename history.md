@@ -43,6 +43,7 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 - ✅ Commit 5: Batch Gradient Descent (full implementation)
 - ✅ Created curriculum.md
 - ✅ Created history.md (this file)
+- ✅ Renamed lib and test files with numeric prefixes (00_, 01_, etc.)
 
 **Commit 3 Details**:
 - L1 regularization (Lasso)
@@ -105,19 +106,19 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 ```
 ml_nx/
 ├── lib/ml_nx/
-│   ├── linear_regression.ex
-│   ├── gradient_descent.ex
-│   ├── loss_functions.ex
-│   ├── regularization.ex
-│   ├── normalization.ex
-│   └── batch_training.ex
+│   ├── 00_linreg.ex
+│   ├── 01_gradient_descent.ex
+│   ├── 02_loss_functions.ex
+│   ├── 03_regularization.ex
+│   ├── 04_normalization.ex
+│   └── 05_batch_training.ex
 ├── test/
-│   ├── linear_regression_test.exs
-│   ├── gradient_descent_test.exs
-│   ├── loss_functions_test.exs
-│   ├── regularization_test.exs
-│   ├── normalization_test.exs
-│   └── batch_training_test.exs
+│   ├── 00_linreg_test.exs
+│   ├── 01_gradient_descent_test.exs
+│   ├── 02_loss_functions_test.exs
+│   ├── 03_regularization_test.exs
+│   ├── 04_normalization_test.exs
+│   └── 05_batch_training_test.exs
 ├── examples/
 │   ├── 00_linreg_demo.exs
 │   ├── 01_gradient_descent_demo.exs
@@ -273,6 +274,8 @@ All tests passing:
 
 ```bash
 # Recent commits
+7c8fa67 refactor: Rename lib and test files with numeric prefixes for better organization
+b7ecbf0 docs: Update history and curriculum for Commit 5
 ea15965 Commit 5: Batch Gradient Descent - Efficient Training Strategies
 3a6c394 Commit 4: Feature Normalization - Scaling for Better Learning
 8e04d9e Commit 3: Regularization - Preventing Overfitting

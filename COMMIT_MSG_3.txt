@@ -1,0 +1,163 @@
+Commit 3: Regularization - Preventing Overfitting
+
+WHAT IS REGULARIZATION?
+========================
+
+Regularization adds a penalty term to the loss function to discourage large
+weights. This prevents overfitting - when a model memorizes training data
+instead of learning generalizable patterns.
+
+Formula: Total Loss = Data Loss + λ * Regularization Penalty
+
+
+THE PROBLEM: OVERFITTING
+=========================
+
+Without regularization:
+  - Model fits training data perfectly (low training error)
+  - But performs poorly on new data (high test error)
+  - Learns noise instead of signal
+  - Weights can grow arbitrarily large
+
+
+THE SOLUTION: PENALTY TERMS
+============================
+
+Add a penalty for large weights:
+  - Encourages simpler models
+  - Better generalization to new data
+  - Controlled by λ (lambda) parameter
+
+
+THE MATHEMATICS
+===============
+
+1. L2 REGULARIZATION (RIDGE)
+   Formula: λ * Σw²
+   
+   Properties:
+   - Shrinks ALL weights toward zero (but not to exactly zero)
+   - Keeps all features in the model
+   - Penalizes large weights heavily (squared term)
+   - Smooth, differentiable everywhere
+   
+   Effect: weights [10, -8, 15] → [2, -1.5, 3]
+
+2. L1 REGULARIZATION (LASSO)
+   Formula: λ * Σ|w|
+   
+   Properties:
+   - Forces some weights to EXACTLY ZERO
+   - Automatic feature selection!
+   - Linear penalty (treats all weights equally)
+   - Sparse solutions
+   
+   Effect: weights [10, -8, 0.5, -0.3] → [8, -6, 0, 0]
+
+3. ELASTIC NET
+   Formula: λ * [α*Σ|w| + (1-α)*Σw²]
+   
+   Properties:
+   - Combines L1 and L2
+   - α controls the mix (0=pure L2, 1=pure L1)
+   - Gets benefits of both
+   - More stable than pure L1
+   
+   Effect: Balanced feature selection and weight shrinkage
+
+
+KEY CONCEPTS TAUGHT
+===================
+
+1. WHY L1 CREATES SPARSITY
+   L1 has "corners" at zero during optimization
+   Weights get pushed to these corners and stick
+   L2 is smooth everywhere, so weights rarely hit exactly zero
+
+2. L1 VS L2 COMPARISON
+   For weight = 10:
+   - L1 contribution: |10| = 10 (linear)
+   - L2 contribution: 10² = 100 (quadratic!)
+   
+   L2 penalizes large weights MUCH more heavily
+
+3. CHOOSING LAMBDA (λ)
+   - λ = 0: No regularization (may overfit)
+   - Small λ: Mild regularization
+   - Large λ: Strong regularization (may underfit)
+   - Tune using validation data!
+
+4. WHEN TO USE EACH
+   - L2: When all features are relevant
+   - L1: When you want feature selection
+   - Elastic Net: When you want both benefits
+
+
+FILES ADDED
+===========
+
+1. lib/ml_nx/regularization.ex
+   - L1, L2, and Elastic Net penalties
+   - Regularized loss computation
+   - Extensive mathematical documentation
+   - Helper functions for comparison
+
+2. test/regularization_test.exs
+   - 18 comprehensive tests (all passing ✓)
+   - Tests each regularization type
+   - Verifies mathematical properties
+   - Compares L1 vs L2 behavior
+
+3. examples/03_regularization_demo.exs
+   - 6 interactive examples
+   - L2 regularization demonstration
+   - L1 regularization and feature selection
+   - L1 vs L2 comparison
+   - Elastic Net mixing
+   - Effect on total loss
+   - Choosing lambda
+
+
+WHAT YOU LEARNED
+================
+
+✓ What regularization is and why we need it
+✓ L2 shrinks all weights (keeps all features)
+✓ L1 forces sparsity (automatic feature selection)
+✓ Elastic Net combines both approaches
+✓ How to choose regularization strength (λ)
+✓ When to use each type of regularization
+
+This prevents overfitting and creates models that generalize better!
+
+
+RUN THE CODE
+============
+
+# Run tests
+mix test test/regularization_test.exs
+
+# Run interactive demo
+mix run examples/03_regularization_demo.exs
+
+
+CONNECTION TO PREVIOUS LESSONS
+===============================
+
+Commit 1 (Gradient Descent) + Commit 2 (Loss Functions) + Commit 3 (Regularization):
+
+  Training Loop:
+    1. Predict: ŷ = model(X)
+    2. Compute loss: L = loss_fn(ŷ, y) + λ*reg(w)  ← Added regularization!
+    3. Compute gradients: ∇L
+    4. Update: θ = θ - α∇L
+    5. Repeat
+
+The regularization term affects the gradients, pulling weights toward zero!
+
+
+NEXT LESSON
+===========
+
+Commit 4 will cover Feature Normalization - scaling features to
+improve gradient descent convergence and model performance.

@@ -1,0 +1,158 @@
+Commit 6: Learning Rate Scheduling - Adaptive Optimization
+
+WHAT IS LEARNING RATE SCHEDULING?
+==================================
+
+Learning rate scheduling adapts the learning rate during training:
+- Start with larger steps for fast initial progress
+- Reduce to smaller steps for fine-tuning near minimum
+- Improves convergence speed and final performance
+
+Formula: lr(epoch) varies based on schedule strategy
+
+
+THE PROBLEM: FIXED LEARNING RATE
+=================================
+
+Fixed LR is suboptimal:
+  - Too large: Overshoots minimum, unstable
+  - Too small: Slow convergence
+  - No adaptation to training progress
+  - Can't balance exploration vs exploitation
+
+
+THE SOLUTION: ADAPTIVE SCHEDULES
+=================================
+
+Adapt learning rate based on training progress.
+
+
+THE MATHEMATICS
+===============
+
+1. STEP DECAY
+   Formula: lr = initial_lr * (decay_rate ^ floor(epoch / decay_steps))
+   
+   Example: Reduce by 0.5 every 10 epochs
+   - Epochs 0-9: lr = 0.1
+   - Epochs 10-19: lr = 0.05
+   - Epochs 20-29: lr = 0.025
+   
+   Use when: You know good decay points
+
+2. EXPONENTIAL DECAY
+   Formula: lr = initial_lr * (decay_rate ^ epoch)
+   
+   Smooth continuous reduction
+   Example with decay_rate=0.95:
+   - Epoch 0: lr = 0.1
+   - Epoch 10: lr = 0.0599
+   - Epoch 20: lr = 0.0358
+   
+   Use when: Want smooth decay, general purpose
+
+3. COSINE ANNEALING
+   Formula: lr = min_lr + (initial_lr - min_lr) * (1 + cos(π*t/T)) / 2
+   
+   Smooth cosine curve from initial to min
+   - Fast initial decay
+   - Slower as approaching minimum
+   - Popular in deep learning
+   
+   Use when: Deep learning, want smooth convergence
+
+
+KEY CONCEPTS TAUGHT
+===================
+
+1. WHY SCHEDULE MATTERS
+   Fixed LR = 0.1 throughout:
+   - Fast initial progress
+   - But overshoots near minimum
+   - Poor final performance
+   
+   Scheduled LR (e.g., cosine):
+   - Fast initial progress (large LR)
+   - Fine-tuning near end (small LR)
+   - Better final performance!
+
+2. COMPARISON OF STRATEGIES
+   At epoch 20 with initial_lr=0.1:
+   - Fixed: 0.1 (no change)
+   - Step (decay every 10): 0.025
+   - Exponential (0.95): 0.0358
+   - Cosine: ~0.03
+   
+   All reduce LR, but differently!
+
+3. WHEN TO USE EACH
+   - Fixed: Quick experiments, simple problems
+   - Step: When you know good decay schedule
+   - Exponential: General purpose, smooth
+   - Cosine: Deep learning (RECOMMENDED!)
+
+
+FILES ADDED
+===========
+
+1. lib/ml_nx/06_lr_scheduler.ex
+   - Fixed, step decay, exponential, cosine
+   - Easy integration with training
+   - Comprehensive documentation
+
+2. test/06_lr_scheduler_test.exs
+   - 24 comprehensive tests (all passing ✓)
+   - 11 doctests + 13 regular tests
+
+3. examples/06_lr_scheduler_demo.exs
+   - 5 interactive examples
+   - All strategies demonstrated
+   - Side-by-side comparison
+
+
+WHAT YOU LEARNED
+================
+
+✓ Why learning rate scheduling improves training
+✓ Step decay: Periodic reductions
+✓ Exponential decay: Smooth continuous
+✓ Cosine annealing: Smooth curve (popular!)
+✓ When to use each strategy
+✓ How to integrate with training loops
+
+
+RUN THE CODE
+============
+
+# Run tests
+mix test test/06_lr_scheduler_test.exs
+
+# Run interactive demo
+mix run examples/06_lr_scheduler_demo.exs
+
+
+CONNECTION TO PREVIOUS LESSONS
+===============================
+
+Complete Training Pipeline:
+
+  1. Normalize: X = normalize(X)  ← Commit 4
+  2. For each epoch:
+       lr = get_lr(schedule, epoch)  ← Commit 6!
+       Batches = create_batches(X, y)  ← Commit 5
+       For each batch:
+         ŷ = model(X_batch)
+         L = loss(ŷ, y) + λ*reg(w)  ← Commits 2 & 3
+         ∇L = compute_gradients()  ← Commit 1
+         θ = θ - lr*∇L  ← Using scheduled LR!
+  3. Return trained model
+
+Learning rate scheduling optimizes the training process!
+
+
+NEXT LESSON
+===========
+
+Commit 7 will cover Advanced Optimizers (Momentum, Adam) - 
+algorithms that adapt both learning rate and gradient updates
+for even faster convergence.

@@ -1,0 +1,203 @@
+Commit 5: Batch Gradient Descent - Efficient Training Strategies
+
+WHAT IS BATCH TRAINING?
+========================
+
+Batch training refers to different strategies for computing gradients and
+updating weights during training. The key question: How many examples do we
+use to compute each gradient update?
+
+Three variants:
+  1. Batch GD: ALL examples
+  2. Stochastic GD: ONE example
+  3. Mini-Batch GD: SMALL batches
+
+
+THE PROBLEM: EFFICIENCY VS ACCURACY
+====================================
+
+Training on large datasets:
+  - Processing all data each iteration is slow
+  - Processing one example is fast but noisy
+  - Need balance between speed and accuracy
+
+Example:
+  Dataset: 1 million examples
+  Batch GD: 1 update per million examples (SLOW!)
+  Stochastic GD: 1 million updates (FAST but NOISY!)
+  Mini-Batch GD: 31,250 updates with batch_size=32 (BALANCED!)
+
+
+THE SOLUTION: BATCH STRATEGIES
+===============================
+
+Choose the right strategy based on dataset size and requirements.
+
+
+THE MATHEMATICS
+===============
+
+1. BATCH GRADIENT DESCENT
+   For each iteration:
+     gradient = (1/n) * Σ ∇L(x_i, y_i)  for ALL n examples
+     θ = θ - α * gradient
+   
+   Properties:
+   - Most accurate gradient estimate
+   - Smooth, deterministic convergence
+   - Slow for large datasets
+   - High memory usage
+   
+   Use when: Small datasets (< 10k examples)
+
+2. STOCHASTIC GRADIENT DESCENT (SGD)
+   For each epoch:
+     For each example (x_i, y_i):
+       gradient = ∇L(x_i, y_i)  for ONE example
+       θ = θ - α * gradient
+   
+   Properties:
+   - Fast updates (no need to process all data)
+   - Noisy convergence (high variance)
+   - Can escape local minima
+   - Low memory usage
+   
+   Use when: Very large datasets, online learning
+
+3. MINI-BATCH GRADIENT DESCENT
+   For each epoch:
+     Divide data into batches of size B
+     For each batch:
+       gradient = (1/B) * Σ ∇L(x_i, y_i)  for B examples
+       θ = θ - α * gradient
+   
+   Properties:
+   - Balance between accuracy and speed
+   - More stable than SGD
+   - Efficient on GPUs (vectorization)
+   - MOST COMMONLY USED!
+   
+   Use when: Most cases (default choice)
+   Common batch sizes: 16, 32, 64, 128, 256
+
+
+KEY CONCEPTS TAUGHT
+===================
+
+1. CONVERGENCE COMPARISON
+   On same problem (y = 2x + 1):
+   
+   Batch GD (100 iter):     w=2.09, b=0.49, loss=0.054
+   Stochastic GD (20 epochs): w=2.08, b=0.50, loss=0.055
+   Mini-Batch GD (20 epochs): w=2.10, b=0.46, loss=0.061
+   
+   All converge to similar solutions!
+
+2. BATCH SIZE IMPACT
+   Batch Size | Convergence | Speed | Memory
+   -----------|-------------|-------|--------
+   1 (SGD)    | Noisy       | Fast  | Low
+   32         | Balanced    | Good  | Medium
+   256        | Smooth      | Slow  | High
+   Full       | Smoothest   | Slowest | Highest
+
+3. WHEN TO USE EACH
+   
+   Batch GD:
+   ✓ Small datasets
+   ✓ Need smooth convergence
+   ✗ Large datasets (too slow)
+   
+   Stochastic GD:
+   ✓ Very large datasets
+   ✓ Online learning
+   ✗ Need stable convergence
+   
+   Mini-Batch GD:
+   ✓ Most cases (RECOMMENDED!)
+   ✓ Deep learning
+   ✓ GPU training
+
+4. PRACTICAL RECOMMENDATIONS
+   - Start with mini-batch GD, batch_size=32
+   - If too slow: decrease batch size
+   - If too noisy: increase batch size
+   - Use powers of 2 for GPU efficiency (16, 32, 64, 128, 256)
+   - Larger batches may need larger learning rates
+
+
+FILES ADDED
+===========
+
+1. lib/ml_nx/batch_training.ex
+   - Batch gradient descent
+   - Stochastic gradient descent
+   - Mini-batch gradient descent
+   - Data shuffling and batching utilities
+   - Comprehensive documentation
+
+2. test/batch_training_test.exs
+   - 27 comprehensive tests (all passing ✓)
+   - 6 doctests + 21 regular tests
+   - Tests all three variants
+   - Convergence comparison
+   - Edge cases
+
+3. examples/05_batch_training_demo.exs
+   - 6 interactive examples
+   - Batch GD demonstration
+   - Stochastic GD demonstration
+   - Mini-batch GD demonstration
+   - Convergence comparison
+   - Batch size impact analysis
+   - Decision guide
+
+
+WHAT YOU LEARNED
+================
+
+✓ Three gradient descent variants and their tradeoffs
+✓ Batch GD: Accurate but slow (use all data)
+✓ Stochastic GD: Fast but noisy (use one example)
+✓ Mini-batch GD: Best balance (use small batches)
+✓ How batch size affects convergence
+✓ When to use each variant
+✓ Practical recommendations for real-world use
+
+This enables efficient training on datasets of any size!
+
+
+RUN THE CODE
+============
+
+# Run tests
+mix test test/batch_training_test.exs
+
+# Run interactive demo
+mix run examples/05_batch_training_demo.exs
+
+
+CONNECTION TO PREVIOUS LESSONS
+===============================
+
+Complete Training Pipeline:
+
+  1. Normalize features: X_norm = normalize(X)  ← Commit 4
+  2. Initialize weights: θ = 0
+  3. For each epoch:
+       Create batches from data  ← Commit 5!
+       For each batch:
+         Predict: ŷ = model(X_batch)
+         Compute loss: L = loss_fn(ŷ, y) + λ*reg(w)  ← Commits 2 & 3
+         Compute gradients: ∇L  ← Commit 1
+         Update: θ = θ - α∇L
+  4. Return trained model
+
+Batch training makes gradient descent practical for large datasets!
+
+
+NEXT LESSON
+===========
+
+Commit 6 will cover Learning Rate Scheduling - adapting the learning
+rate during training for faster convergence and better final performance.

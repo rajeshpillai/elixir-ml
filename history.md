@@ -41,6 +41,7 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 - ✅ Commit 3: Regularization (completed in previous session, verified)
 - ✅ Commit 4: Feature Normalization (full implementation)
 - ✅ Commit 5: Batch Gradient Descent (full implementation)
+- ✅ Commit 6: Learning Rate Scheduling (full implementation)
 - ✅ Created curriculum.md
 - ✅ Created history.md (this file)
 - ✅ Renamed lib and test files with numeric prefixes (00_, 01_, etc.)

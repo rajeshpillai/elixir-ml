@@ -95,9 +95,21 @@ Each commit includes:
 
 ---
 
+### ✅ Commit 6: Learning Rate Scheduling
+**Status**: Complete  
+**Files**: [06_lr_scheduler.ex](file:///home/rajesh/lab/elixir/ml/ml_nx/lib/ml_nx/06_lr_scheduler.ex), [06_lr_scheduler_demo.exs](file:///home/rajesh/lab/elixir/ml/ml_nx/examples/06_lr_scheduler_demo.exs)  
+**Docs**: [COMMIT_MSG_6.txt](file:///home/rajesh/lab/elixir/ml/ml_nx/COMMIT_MSG_6.txt)
+
+**What You Learned**:
+- Fixed, step decay, exponential, cosine annealing
+- When to use each strategy
+- How scheduling improves convergence
+
+---
+
 ## Upcoming Commits
 
-### 🔜 Commit 6: Learning Rate Scheduling
+### 🔜 Commit 7: Momentum & Optimization
 **Topics**:
 - Batch gradient descent
 - Stochastic gradient descent (SGD)
@@ -270,7 +282,7 @@ Production (Commits 14-15):
 - [x] Commit 3: Regularization
 - [x] Commit 4: Feature Normalization
 - [x] Commit 5: Batch Gradient Descent
-- [ ] Commit 6: Learning Rate Scheduling
+- [x] Commit 6: Learning Rate Scheduling
 - [ ] Commit 7: Momentum & Optimization
 - [ ] Commit 8: Logistic Regression
 - [ ] Commit 9: Multi-class Classification
@@ -281,7 +293,7 @@ Production (Commits 14-15):
 - [ ] Commit 14: Model Evaluation & Validation
 - [ ] Commit 15: Complete ML Pipeline
 
-**Current Progress**: 6/15 commits complete (40%)
+**Current Progress**: 7/15 commits complete (47%)
 
 ---
 

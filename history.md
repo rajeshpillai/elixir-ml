@@ -34,12 +34,13 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 
 ---
 
-### Session 2: Commits 3-4
-**Date**: 2025-12-12 (14:41-14:54)
+### Session 2: Commits 3-5
+**Date**: 2025-12-12 (14:41-15:00)
 
 **Completed**:
 - ✅ Commit 3: Regularization (completed in previous session, verified)
 - ✅ Commit 4: Feature Normalization (full implementation)
+- ✅ Commit 5: Batch Gradient Descent (full implementation)
 - ✅ Created curriculum.md
 - ✅ Created history.md (this file)
 
@@ -58,15 +59,27 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 - 6 interactive examples
 - Git commit: `3a6c394`
 
+**Commit 5 Details**:
+- Batch gradient descent
+- Stochastic gradient descent (SGD)
+- Mini-batch gradient descent
+- 27 comprehensive tests (6 doctests + 21 regular)
+- 6 interactive examples
+- Git commit: `ea15965`
+
 **Key Files Created**:
 - `lib/ml_nx/regularization.ex`
 - `lib/ml_nx/normalization.ex`
+- `lib/ml_nx/batch_training.ex`
 - `test/regularization_test.exs`
 - `test/normalization_test.exs`
+- `test/batch_training_test.exs`
 - `examples/03_regularization_demo.exs`
 - `examples/04_normalization_demo.exs`
+- `examples/05_batch_training_demo.exs`
 - `docs/03_regularization.md`
 - `docs/04_normalization.md`
+- `docs/05_batch_training.md`
 - `docs/curriculum.md`
 - `history.md`
 
@@ -74,7 +87,7 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 
 ## Current State
 
-### Progress: 5/15 Commits Complete (33%)
+### Progress: 6/15 Commits Complete (40%)
 
 **Completed Commits**:
 1. ✅ Commit 0: Linear Regression
@@ -82,9 +95,10 @@ Building a comprehensive machine learning library in Elixir using Nx, following 
 3. ✅ Commit 2: Loss Functions
 4. ✅ Commit 3: Regularization
 5. ✅ Commit 4: Feature Normalization
+6. ✅ Commit 5: Batch Gradient Descent
 
 **Next Up**:
-- 🔜 Commit 5: Batch Gradient Descent
+- 🔜 Commit 6: Learning Rate Scheduling
 
 ### Project Structure
 
@@ -95,30 +109,35 @@ ml_nx/
 │   ├── gradient_descent.ex
 │   ├── loss_functions.ex
 │   ├── regularization.ex
-│   └── normalization.ex
+│   ├── normalization.ex
+│   └── batch_training.ex
 ├── test/
 │   ├── linear_regression_test.exs
 │   ├── gradient_descent_test.exs
 │   ├── loss_functions_test.exs
 │   ├── regularization_test.exs
-│   └── normalization_test.exs
+│   ├── normalization_test.exs
+│   └── batch_training_test.exs
 ├── examples/
 │   ├── 00_linreg_demo.exs
 │   ├── 01_gradient_descent_demo.exs
 │   ├── 02_loss_functions_demo.exs
 │   ├── 03_regularization_demo.exs
-│   └── 04_normalization_demo.exs
+│   ├── 04_normalization_demo.exs
+│   └── 05_batch_training_demo.exs
 ├── docs/
 │   ├── 00_linear_regression.md
 │   ├── 01_gradient_descent.md
 │   ├── 02_loss_functions.md
 │   ├── 03_regularization.md
 │   ├── 04_normalization.md
+│   ├── 05_batch_training.md
 │   └── curriculum.md
 ├── COMMIT_MSG_1.txt
 ├── COMMIT_MSG_2.txt
 ├── COMMIT_MSG_3.txt
 ├── COMMIT_MSG_4.txt
+├── COMMIT_MSG_5.txt
 └── history.md
 ```
 
@@ -130,8 +149,9 @@ All tests passing:
 - Loss Functions: ✓
 - Regularization: 18 tests ✓
 - Normalization: 38 tests ✓
+- Batch Training: 27 tests ✓
 
-**Total**: ~100+ tests, all passing
+**Total**: ~130+ tests, all passing
 
 ---
 
@@ -145,6 +165,9 @@ All tests passing:
 - L2 regularization: λΣw²
 - Min-max scaling: (x - min)/(max - min)
 - Standardization: (x - mean)/std
+- Batch GD: gradient from ALL examples
+- Stochastic GD: gradient from ONE example
+- Mini-Batch GD: gradient from SMALL batches
 
 ### Implementation Skills
 - Nx tensor operations
@@ -160,6 +183,7 @@ All tests passing:
 - Overfitting prevention
 - Feature preprocessing
 - Model evaluation
+- Efficient training strategies
 
 ---
 
@@ -230,13 +254,13 @@ All tests passing:
 4. Review `docs/0X_*.md` for recent learning
 5. Run `mix test` to verify everything still works
 
-### Next Commit (5) Should Cover:
-- Batch gradient descent
-- Stochastic gradient descent (SGD)
-- Mini-batch gradient descent
-- Convergence comparison
-- When to use each variant
-- Efficient training on large datasets
+### Next Commit (6) Should Cover:
+- Fixed learning rate
+- Step decay
+- Exponential decay
+- Adaptive learning rates
+- Learning rate warmup
+- When to use each strategy
 
 ### Upcoming Challenges:
 - Commits 10-13: Neural networks (more complex)
@@ -249,6 +273,7 @@ All tests passing:
 
 ```bash
 # Recent commits
+ea15965 Commit 5: Batch Gradient Descent - Efficient Training Strategies
 3a6c394 Commit 4: Feature Normalization - Scaling for Better Learning
 8e04d9e Commit 3: Regularization - Preventing Overfitting
 [previous commits...]
@@ -281,7 +306,7 @@ git log --oneline -5
 
 **User Goal**: Complete a 15-commit ML learning curriculum in Elixir/Nx
 
-**Current Status**: 5/15 commits complete, ready for Commit 5
+**Current Status**: 6/15 commits complete (40%), ready for Commit 6
 
 **Pattern**: Each commit follows the same structure (module, tests, demo, docs, commit message)
 
@@ -292,8 +317,8 @@ git log --oneline -5
 - Clean, functional code
 - Progressive learning
 
-**Next Steps**: Implement Commit 5 (Batch Gradient Descent) following the established pattern
+**Next Steps**: Implement Commit 6 (Learning Rate Scheduling) following the established pattern
 
 ---
 
-*Last Updated: 2025-12-12 14:54 IST*
+*Last Updated: 2025-12-12 15:00 IST*

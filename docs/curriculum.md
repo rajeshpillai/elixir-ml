@@ -81,9 +81,23 @@ Each commit includes:
 
 ---
 
+### ✅ Commit 5: Batch Gradient Descent
+**Status**: Complete  
+**Files**: [batch_training.ex](file:///home/rajesh/lab/elixir/ml/ml_nx/lib/ml_nx/batch_training.ex), [05_batch_training_demo.exs](file:///home/rajesh/lab/elixir/ml/ml_nx/examples/05_batch_training_demo.exs)  
+**Docs**: [05_batch_training.md](file:///home/rajesh/lab/elixir/ml/ml_nx/docs/05_batch_training.md)
+
+**What You Learned**:
+- Batch gradient descent (all data)
+- Stochastic gradient descent (one example)
+- Mini-batch gradient descent (small batches)
+- When to use each variant
+- Batch size impact on convergence
+
+---
+
 ## Upcoming Commits
 
-### 🔜 Commit 5: Batch Gradient Descent
+### 🔜 Commit 6: Learning Rate Scheduling
 **Topics**:
 - Batch gradient descent
 - Stochastic gradient descent (SGD)
@@ -255,7 +269,7 @@ Production (Commits 14-15):
 - [x] Commit 2: Loss Functions
 - [x] Commit 3: Regularization
 - [x] Commit 4: Feature Normalization
-- [ ] Commit 5: Batch Gradient Descent
+- [x] Commit 5: Batch Gradient Descent
 - [ ] Commit 6: Learning Rate Scheduling
 - [ ] Commit 7: Momentum & Optimization
 - [ ] Commit 8: Logistic Regression
@@ -267,7 +281,7 @@ Production (Commits 14-15):
 - [ ] Commit 14: Model Evaluation & Validation
 - [ ] Commit 15: Complete ML Pipeline
 
-**Current Progress**: 5/15 commits complete (33%)
+**Current Progress**: 6/15 commits complete (40%)
 
 ---
 
@@ -293,6 +307,6 @@ Each commit builds on previous knowledge, so follow the order!
 
 ## Next Steps
 
-Currently working on: **Commit 5: Batch Gradient Descent**
+Currently working on: **Commit 6: Learning Rate Scheduling**
 
-Ready to learn how to efficiently train on large datasets! 🚀
+Ready to learn how to optimize training with adaptive learning rates! 🚀

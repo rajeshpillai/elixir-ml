@@ -1,0 +1,213 @@
+Commit 4: Feature Normalization - Scaling for Better Learning
+
+WHAT IS FEATURE NORMALIZATION?
+===============================
+
+Feature normalization scales features to similar ranges. This ensures all
+features contribute equally to gradient descent, leading to faster and more
+stable training.
+
+Formula: Transform features so they're on comparable scales
+
+
+THE PROBLEM: DIFFERENT SCALES
+==============================
+
+Without normalization:
+  - Features on vastly different scales (e.g., age: 20-80, salary: 20k-200k)
+  - Large-scale features dominate gradient updates
+  - Small-scale features update too slowly
+  - Gradient descent takes zig-zag path
+  - Slow, unstable convergence
+
+Example:
+  Feature 1 (bedrooms): 2-5
+  Feature 2 (square feet): 800-3000
+  
+  Gradients for square feet are 100x larger!
+  Learning rate that works for one breaks the other!
+
+
+THE SOLUTION: NORMALIZATION
+============================
+
+Scale all features to similar ranges:
+  - All features contribute equally
+  - Same learning rate works for all
+  - Direct path to minimum
+  - Fast, stable convergence!
+
+
+THE MATHEMATICS
+===============
+
+1. MIN-MAX SCALING
+   Formula: x_scaled = (x - min) / (max - min)
+   
+   Properties:
+   - Scales to specific range (default [0, 1])
+   - Smallest value → 0, Largest value → 1
+   - Preserves relationships between values
+   - Sensitive to outliers
+   - Bounded output
+   
+   Custom range: new_min + (x - min) * (new_max - new_min) / (max - min)
+   
+   Example: [10, 20, 30, 40, 50] → [0.0, 0.25, 0.5, 0.75, 1.0]
+
+2. STANDARDIZATION (Z-SCORE)
+   Formula: x_standardized = (x - mean) / std
+   
+   Properties:
+   - Centers data around mean = 0
+   - Scales to std = 1
+   - More robust to outliers
+   - Unbounded output
+   - Preserves distribution shape
+   
+   Example: [10, 20, 30, 40, 50] → [-1.414, -0.707, 0.0, 0.707, 1.414]
+
+3. INVERSE TRANSFORMATIONS
+   
+   Min-Max Inverse: x_original = x_scaled * (max - min) + min
+   Standardization Inverse: x_original = x_standardized * std + mean
+   
+   Critical for predictions:
+   - Train on normalized data
+   - Predict in normalized space
+   - Inverse transform to get interpretable results
+   - Perfect roundtrip: no information lost!
+
+
+KEY CONCEPTS TAUGHT
+===================
+
+1. WHY MIN-MAX IS OUTLIER-SENSITIVE
+   Data: [5, 10, 15, 20, 100]
+   
+   Min-Max [0, 1]:
+   - 100 becomes 1.0 (max)
+   - Other values squashed near 0: [0.0, 0.053, 0.105, 0.158]
+   - Outlier dominates the scaling!
+
+2. WHY STANDARDIZATION IS ROBUST
+   Same data: [5, 10, 15, 20, 100]
+   
+   Standardized:
+   - 100 becomes 1.98 (1.98 std devs from mean)
+   - Other values preserved: [-0.707, -0.566, -0.424, -0.283]
+   - Outlier marked as unusual but doesn't dominate!
+
+3. GRADIENT DESCENT IMPACT
+   
+   Without normalization:
+   - Feature 1: [2, 3, 4, 5] (range: 3)
+   - Feature 2: [800, 1500, 2200, 3000] (range: 2200)
+   - Gradients differ by 700x!
+   - Zig-zag path, slow convergence
+   
+   With normalization:
+   - Both features: [0, 1] range
+   - Gradients on same scale
+   - Direct path, fast convergence!
+
+4. WHEN TO USE EACH
+   
+   Min-Max:
+   - Known bounds (e.g., pixel values 0-255)
+   - No outliers
+   - Need specific range (e.g., neural networks want [0, 1])
+   
+   Standardization:
+   - Unknown bounds
+   - Outliers present
+   - Features follow normal distribution
+   - Linear models (e.g., linear regression)
+
+5. PRACTICAL WORKFLOW
+   
+   Training:
+   1. Split data into train/test
+   2. Compute normalization stats from TRAIN set only
+   3. Normalize train set using train stats
+   4. Normalize test set using SAME train stats
+   5. Train model on normalized data
+   
+   Prediction:
+   1. Normalize new input using SAVED train stats
+   2. Get prediction (normalized)
+   3. Inverse transform to original scale
+   4. Return interpretable result
+
+
+FILES ADDED
+===========
+
+1. lib/ml_nx/normalization.ex
+   - Min-max scaling (default and custom range)
+   - Standardization (z-score)
+   - Inverse transformations
+   - Comprehensive documentation
+   - Helper utilities
+
+2. test/normalization_test.exs
+   - 38 comprehensive tests (all passing ✓)
+   - 15 doctests + 23 regular tests
+   - Tests both techniques
+   - Verifies inverse transformations
+   - Tests edge cases and 2D tensors
+
+3. examples/04_normalization_demo.exs
+   - 6 interactive examples
+   - Min-max scaling demonstration
+   - Custom range scaling
+   - Standardization demonstration
+   - Min-max vs standardization comparison
+   - Gradient descent impact
+   - Inverse transformations
+
+
+WHAT YOU LEARNED
+================
+
+✓ Why normalization is essential for gradient descent
+✓ Min-max scaling (bounded, outlier-sensitive)
+✓ Standardization (unbounded, outlier-robust)
+✓ When to use each technique
+✓ How to use inverse transformations
+✓ Practical workflow for training and prediction
+
+This ensures all features contribute equally to learning!
+
+
+RUN THE CODE
+============
+
+# Run tests
+mix test test/normalization_test.exs
+
+# Run interactive demo
+mix run examples/04_normalization_demo.exs
+
+
+CONNECTION TO PREVIOUS LESSONS
+===============================
+
+Complete Training Pipeline:
+
+  1. Normalize features: X_norm = normalize(X)  ← Commit 4!
+  2. Predict: ŷ = model(X_norm)
+  3. Compute loss: L = loss_fn(ŷ, y) + λ*reg(w)  ← Commits 2 & 3
+  4. Compute gradients: ∇L  ← Commit 1
+  5. Update: θ = θ - α∇L
+  6. Repeat
+
+Normalization is the FIRST step in the pipeline and dramatically
+improves convergence speed and stability!
+
+
+NEXT LESSON
+===========
+
+Commit 5 will cover Batch Gradient Descent - different strategies
+for updating weights (batch, stochastic, mini-batch) and when to use each.

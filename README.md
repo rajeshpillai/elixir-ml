@@ -1,6 +1,34 @@
 # MlNx
 
-**TODO: Add description**
+A comprehensive machine learning library in Elixir using Nx, following a 15-commit educational curriculum.
+
+## Usage
+
+### Running Interactive Demos
+
+You can execute the interactive demos located in the `examples/` directory using `mix run`.
+
+**Latest Demo (Learning Rate Scheduler):**
+```bash
+mix run examples/06_lr_scheduler_demo.exs
+```
+
+**Other Available Demos:**
+```bash
+mix run examples/05_batch_training_demo.exs
+mix run examples/04_normalization_demo.exs
+mix run examples/03_regularization_demo.exs
+mix run examples/02_loss_functions_demo.exs
+mix run examples/01_gradient_descent_demo.exs
+mix run examples/00_linreg_demo.exs
+```
+
+### Running Tests
+
+To verify that everything is working correctly, you can run the full test suite:
+```bash
+mix test
+```
 
 ## Installation
 
